@@ -11,7 +11,7 @@ async function getWeather(lat, lon) {
   console.log(json);
   const temperature = json.main.temp;
   const place = json.name;
-  weather.innerText = `${temperature}℃ @ ${place}`;
+  weather.innerText = `${temperature} ℃\n@ ${place}`;
 }
 
 function saveCoords(coordsObj) {
@@ -29,7 +29,17 @@ function handleGeoSuccess(position) {
   getWeather(lat, lon);
 }
 
-function handleGeoError() {}
+function handleGeoError() {
+  // default position
+  const lat = 37.5;
+  const lon = 127.0;
+  const coordsObj = {
+    lat,
+    lon,
+  };
+  saveCoords(coordsObj);
+  getWeather(lat, lon);
+}
 
 function askForCoords() {
   navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
